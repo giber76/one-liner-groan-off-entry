@@ -18,6 +18,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const JOKE =
   "I told the toaster it was toast. It said, \"I'm bread for this.\"";
 
+// Guard the gate: one line, 1–140 chars, no trailing newline, or fail
+// loudly instead of submitting something the scorer would refuse.
+if (JOKE.length < 1 || JOKE.length > 140 || JOKE.includes("\n")) {
+  throw new Error(
+    `entry must be one line of 1-140 chars, got ${JOKE.length} chars`,
+  );
+}
+
 const dest = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 // In the grader /output is a mount point: create it when it is missing,
